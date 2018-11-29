@@ -28,8 +28,10 @@ public class neuron {
 		return error;
 	}
 	
-	public void resetError() {
-		error = 0;
+	public void setError() {
+		for(neuronAxon Axon : inputs) {
+			Axon.addError(error, value);
+		}
 	}
 	
 	public void addError(double errorValue) {
@@ -57,6 +59,7 @@ public class neuron {
 		for(neuronAxon axon: inputs) {
 			axon.changeWeight((value*(1-value))*error);
 		}
+		error = 0;
 	}
 	
 	private double sigmoid(double x) {

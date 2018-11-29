@@ -20,7 +20,7 @@ public class neuronAxon {
 		return value;
 	}
 	
-	public void addError() {
-		from.addError(weight*to.getError()*neuralNetwork.learningRate*(to.getValue()*(1-to.getValue())));
+	public void addError(double error, double value) {
+		from.addError(weight*error*neuralNetwork.learningRate*(value*(1-value)));
 	}
 }

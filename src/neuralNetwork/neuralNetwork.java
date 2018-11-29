@@ -53,6 +53,13 @@ public class neuralNetwork {
 		}
 	}
 	
+	public void trainNetwork(ArrayList<double[]> dataSet) {
+		for(double[] instance: dataSet) {
+			newInput(instance);
+			getOutput();
+		}
+	}
+	
 	public void newInput(double... inputValues) {
 		int count = 0;
 		for(neuron n : network.get(0)) {
@@ -69,5 +76,26 @@ public class neuralNetwork {
 		}
 		
 		return outputs;
+	}
+	
+	private void backPropogate(double... expected) {
+		int count = 0;
+		for(neuron n : network.get(network.size()-1)) {
+			double x = n.getValue()-expected[count];
+			double half = 1/2;
+			n.addError(half*x*x);
+			count++;
+		}
+		
+		for(ArrayList<neuron> list : network) {
+			for(neuron n: list) {
+				n.setError();
+			}
+		}
+		for(ArrayList<neuron> list : network) {
+			for(neuron n: list) {
+				n.changeWeights();
+			}
+		}
 	}
 }
